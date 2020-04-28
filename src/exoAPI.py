@@ -7,7 +7,6 @@ An REST API interface.
 It supports the following functions
     1. set up a list of API urls,                       : addAPI_URL
     2. get data in JSON format from the API urls        : getDataAsJSON
-    3. extract specific data from the JSON data format  : getDataFromJSON
 '''
 class exoREST:
 
@@ -41,7 +40,8 @@ class exoREST:
             return parsed
         if outputformat == 'str':
             return json.dump(parsed)
-    
+    # --------------------------------------------
+    # Under developement
     def JSONTraverser(indict, pre=None):
         pre = pre[:] if pre else []
         if isinstance(indict, dict):
@@ -79,3 +79,4 @@ class exoREST:
             except:
                 data.append(JSONdict[_p0])
         return data
+    # --------------------------------------------
