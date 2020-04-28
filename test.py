@@ -77,15 +77,38 @@ class TestAPI(unittest.TestCase):
             api.getDataAsJSON(url_name = '')
         self.assertTrue('null url' in context.exception)
         
+    def test_JSONStructure(self):
+        pass
+
     def test_JSONParser(self):
         api = exoREST
         
         # FUNCTION SIGNATURE : JSONParser(self, jsonVar, hierarchy)
+        jsonVar = {"status":"success", "data":{"id":"1","employee_name":"Tiger Nixon","employee_salary":"320800",\
+        "employee_age":"61","profile_image":""}}
         
-        # should check for jsonVar structure
+        # simple test
+        self.assertEqual(self.JSONParser(jsonVar, 'status'), "success" , "should return \'success\'" )
         
-        # should check for hierarchy structure
+        # simple failing test: wrong hierarchy:
+        with self.assertRaises(Exception) as context:
+            api.JSONParser(jsonVar, 'stat')
+        self.assertTrue('no key called stat in jsonVar' in context.exception)
         
+        # null hierarchy -- ?????
+        # -------------------Under consideration------------------------
+        # with self.assertRaises(Exception) as context:
+            # api.JSONParser(jsonVar, '')
+        # self.assertTrue('null hierarchy not allowed' in context.exception)
+        # -------------------Under consideration------------------------
+        
+        _jsonVar = {}
+        
+        #empty jsonvar
+        
+        with self.assertRaises(Warning) as context:
+            api.JSONParser(_jsonVar, 'status')
+        self.assertTrue('empty json var' in context.warning)
         
 class TestSocialBot(unittest.TestCase):                
     def test_socialBot(self):
