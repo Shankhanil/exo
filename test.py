@@ -110,15 +110,5 @@ class TestAPI(unittest.TestCase):
             api.JSONParser(_jsonVar, 'status')
         self.assertTrue('empty json var' in context.warning)
         
-class TestSocialBot(unittest.TestCase):                
-    def test_socialBot(self):
-        pass
-class TestMotivateU(unittest.TestCase):
-    def test_MotivateU(self):
-        pass
-class TestMotivateU_GUI(unittest.TestCase):
-    def test_gui(self):
-        pass
-        
 if __name__ == '__main__':
     unittest.main()
