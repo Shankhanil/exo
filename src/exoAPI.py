@@ -32,8 +32,11 @@ class exoREST:
     def getURL_LIST(self):
         return self.url_list
             
-    def getDataAsJSON(self, url_name):
-        pass
+    def getDataFromAPI(self, url_name):
+        # json_data = 
+        r = requests.get(self.url_list[url_name])
+        return r.json()
+        # pass
             
     def JSONParser(self, jsonVar, hierarchy):
         pass

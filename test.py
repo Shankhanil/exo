@@ -50,26 +50,26 @@ class TestAPI(unittest.TestCase):
         api.addAPI_URL('abc', 'http://dummy.restapiexample.com/api/v1/employees')
         self.assertEqual(api.getURL_LIST(), {'abc': 'http://dummy.restapiexample.com/api/v1/employees'},'returns proper dictionay on call')
     
-    def test_getDataAsJSON(self):
+    def test_getDataFromAPI(self):
         api = exoREST()
-        # FUNCTION SIGNATURE : getDataAsJSON(self, url_name, method = 'get', outputformat = 'json')
+        # FUNCTION SIGNATURE : getDataFromAPI(self, url_name, method = 'get', outputformat = 'json')
         api.addAPI_URL('abc', 'http://dummy.restapiexample.com/api/v1/employee/12')
         api.addAPI_URL('abc2', 'http://dummy.restapiexample.com/api/v1/employees/0')
+        json_abc1 = {"status":"success","data":{"id":"12","employee_name":"Quinn Flynn","employee_salary":"342000","employee_age":"22","profile_image":""}}
         
         # test with a normal url_name, get a sucess 
-        self.assertEqual( api.getDataAsJSON(url_name = 'abc'), True, 'Should run properly and return True')
+        self.assertEqual( api.getDataFromAPI(url_name = 'abc'), json_abc1, 'Should run properly and return json_abc1')
         
         # test with a normal url_name, get a failure
-        self.assertEqual( api.getDataAsJSON(url_name = 'abc2'), False, 'Should run properly and return False')
+        self.assertEqual( api.getDataFromAPI(url_name = 'abc2'), False, 'Should run properly and return False')
         
         # test with a non existing url_name
         with self.assertRaises(Exception) as context:
-            api.getDataAsJSON(url_name = 'def')
-        self.assertTrue('URL not existing' in context.exception)
+            api.getDataFromAPI(url_name = 'def')
         
         # test with null url
         with self.assertRaises(Exception) as context:
-            api.getDataAsJSON(url_name = '')
+            api.getDataFromAPI(url_name = '')
         self.assertTrue('null url' in context.exception)
         
     def test_JSONStructure(self):
@@ -88,7 +88,6 @@ class TestAPI(unittest.TestCase):
         # simple failing test: wrong hierarchy:
         with self.assertRaises(Exception) as context:
             api.JSONParser(jsonVar, 'stat')
-        self.assertTrue('no key called stat in jsonVar' in context.exception)
         
         # null hierarchy -- ?????
         # -------------------Under consideration------------------------
