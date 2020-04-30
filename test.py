@@ -54,7 +54,7 @@ class TestAPI(unittest.TestCase):
         api = exoREST()
         # FUNCTION SIGNATURE : getDataFromAPI(self, url_name, method = 'get', outputformat = 'json')
         api.addAPI_URL('validAPI_URL', 'http://maps.googleapis.com/maps/api/geocode/json')
-        api.addAPI_URL
+        api.addAPI_URL ('invalid_URL', 'http://maps.googleapis.com/')
         json_abc1 = {"error_message" : "Invalid request. Missing the 'address', 'components', 'latlng' or 'place_id' parameter.","results" : [],"status" : "INVALID_REQUEST"}
         
         # test with a normal url_name, get a sucess 
@@ -69,6 +69,8 @@ class TestAPI(unittest.TestCase):
             api.getDataFromAPI(url_name = '')
             
         # test will invalid api url
+        with self.assertRaises(Exception) as context:
+            api.getDataFromAPI(url_name = 'invalid_URL')
         
     def test_JSONStructure(self):
         pass
@@ -79,9 +81,9 @@ class TestAPI(unittest.TestCase):
         # FUNCTION SIGNATURE : JSONParser(self, jsonVar, hierarchy)
         jsonVar = {"status":"success", "data":{"id":"1","employee_name":"Tiger Nixon","employee_salary":"320800",\
         "employee_age":"61","profile_image":""}}
-        
+        _jsonVar = {}
         # simple test
-        self.assertEqual( api.JSONParser(jsonVar, 'status') , "success" , "should return \'success\'" )
+        self.assertEqual( api.JSONParser(jsonVar, "status") , "success" , "should return \'success\'" )
         
         # simple failing test: wrong hierarchy:
         with self.assertRaises(Exception) as context:
@@ -100,7 +102,6 @@ class TestAPI(unittest.TestCase):
         
         with self.assertRaises(Warning) as context:
             api.JSONParser(_jsonVar, 'status')
-        self.assertTrue('empty json var' in context.warning)
         
 if __name__ == '__main__':
     unittest.main()

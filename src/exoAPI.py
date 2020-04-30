@@ -46,7 +46,12 @@ class exoREST:
         return parsed
             
     def JSONParser(self, jsonVar, param):
-        # return param in list(jsonVar.keys())
+        if jsonVar == {}:
+            raise Warning("Empty JSON")
+        else:
+            if param not in list(jsonVar.keys() ):
+                raise Exception("invalid json parameter")
+        
         return jsonVar[param]
         # return jsonVar.keys()
         
