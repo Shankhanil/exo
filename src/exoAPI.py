@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import urllib.request
 import requests
 import json
 import re 
@@ -33,13 +34,22 @@ class exoREST:
         return self.url_list
             
     def getDataFromAPI(self, url_name):
-        # json_data = 
-        r = requests.get(self.url_list[url_name])
-        return r.json()
-        # pass
+        if url_name not in self.url_list.keys():
+            raise Exception(f'{url_name} is not a valid urlname')
+        url = self.url_list[url_name]
+        parsed = {}
+        response = requests.get(url)
+        # return response
+        data = response.text
+        # return data
+        parsed = json.loads(data)
+        return parsed
             
-    def JSONParser(self, jsonVar, hierarchy):
-        pass
+    def JSONParser(self, jsonVar, param):
+        # return param in list(jsonVar.keys())
+        return jsonVar[param]
+        # return jsonVar.keys()
+        
     # --------------------------------------------
     # Under developement
     # def JSONTraverser(indict, pre=None):

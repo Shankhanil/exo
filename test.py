@@ -13,8 +13,8 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(api.url_list, {}, 'Initial url list must be empty')
         
      # Test for URL name
-        # Try to add 'abc' url. It should successfully add
-        self.assertEqual(api.addAPI_URL('abc', 'http://dummy.restapiexample.com/api/v1/employees'), None, 'Function should return nothing on success')
+        # Try to add 'validAPI_URL' url. It should successfully add
+        self.assertEqual(api.addAPI_URL('validAPI_URL', 'http://dummy.restapiexample.com/api/v1/employees'), None, 'Function should return nothing on success')
         
         #Null URL name should throw exception
         with self.assertRaises(Exception) as context:
@@ -22,23 +22,23 @@ class TestAPI(unittest.TestCase):
         
         #duplicate URL name should throw exception
         with self.assertRaises(Exception) as context:
-            api.addAPI_URL('abc', 'google.com')
+            api.addAPI_URL('validAPI_URL', 'google.com')
         
     # Test for URL
         api2 = exoREST()
-        api2.addAPI_URL('abc', 'http://dummy.restapiexample.com/api/v1/employees')
+        api2.addAPI_URL('validAPI_URL', 'http://dummy.restapiexample.com/api/v1/employees')
         
         # Raise exception if URL is null
         with self.assertRaises(Exception) as context:
-            api2.addAPI_URL('abc', '')
+            api2.addAPI_URL('validAPI_URL', '')
             
         # check for URL formatting is correct
         with self.assertRaises(Exception) as context:
-            api2.addAPI_URL('def', 'example/com')
+            api2.addAPI_URL('invalidAPI_URL', 'example/com')
         
         # Raise warning if same URL has been added already
         with self.assertRaises(Warning) as context:
-            api2.addAPI_URL('def', 'http://dummy.restapiexample.com/api/v1/employees')
+            api2.addAPI_URL('duplicateAPI_URL', 'http://dummy.restapiexample.com/api/v1/employees')
         # self.assertTrue('duplicate URL' in context.warning)
         
     def test_getURL_LIST(self):
@@ -47,30 +47,28 @@ class TestAPI(unittest.TestCase):
         # FUNCTION SIGNATURE : getURL_LIST(self)
         
         self.assertEqual(api.getURL_LIST(), {}, 'returns a null url_list on initial call')
-        api.addAPI_URL('abc', 'http://dummy.restapiexample.com/api/v1/employees')
-        self.assertEqual(api.getURL_LIST(), {'abc': 'http://dummy.restapiexample.com/api/v1/employees'},'returns proper dictionay on call')
+        api.addAPI_URL('validAPI_URL', 'http://dummy.restapiexample.com/api/v1/employees')
+        self.assertEqual(api.getURL_LIST(), {'validAPI_URL': 'http://dummy.restapiexample.com/api/v1/employees'},'returns proper dictionay on call')
     
     def test_getDataFromAPI(self):
         api = exoREST()
         # FUNCTION SIGNATURE : getDataFromAPI(self, url_name, method = 'get', outputformat = 'json')
-        api.addAPI_URL('abc', 'http://dummy.restapiexample.com/api/v1/employee/12')
-        api.addAPI_URL('abc2', 'http://dummy.restapiexample.com/api/v1/employees/0')
-        json_abc1 = {"status":"success","data":{"id":"12","employee_name":"Quinn Flynn","employee_salary":"342000","employee_age":"22","profile_image":""}}
+        api.addAPI_URL('validAPI_URL', 'http://maps.googleapis.com/maps/api/geocode/json')
+        api.addAPI_URL
+        json_abc1 = {"error_message" : "Invalid request. Missing the 'address', 'components', 'latlng' or 'place_id' parameter.","results" : [],"status" : "INVALID_REQUEST"}
         
         # test with a normal url_name, get a sucess 
-        self.assertEqual( api.getDataFromAPI(url_name = 'abc'), json_abc1, 'Should run properly and return json_abc1')
-        
-        # test with a normal url_name, get a failure
-        self.assertEqual( api.getDataFromAPI(url_name = 'abc2'), False, 'Should run properly and return False')
+        self.assertEqual( api.getDataFromAPI(url_name = 'validAPI_URL'), json_abc1, 'Should run properly and return json_abc1')
         
         # test with a non existing url_name
         with self.assertRaises(Exception) as context:
-            api.getDataFromAPI(url_name = 'def')
+            api.getDataFromAPI(url_name = 'unknownAPI_URL')
         
         # test with null url
         with self.assertRaises(Exception) as context:
             api.getDataFromAPI(url_name = '')
-        self.assertTrue('null url' in context.exception)
+            
+        # test will invalid api url
         
     def test_JSONStructure(self):
         pass
@@ -83,7 +81,7 @@ class TestAPI(unittest.TestCase):
         "employee_age":"61","profile_image":""}}
         
         # simple test
-        self.assertEqual( api.JSONParser(jsonVar = jsonVar, hierarchy = 'status') , "success" , "should return \'success\'" )
+        self.assertEqual( api.JSONParser(jsonVar, 'status') , "success" , "should return \'success\'" )
         
         # simple failing test: wrong hierarchy:
         with self.assertRaises(Exception) as context:
