@@ -3,7 +3,6 @@ import urllib.request
 import requests
 import json
 import re
-from anytree import Node, RenderTree
 '''
 An REST API interface. 
 It supports the following functions
@@ -54,8 +53,35 @@ class exoREST:
                 raise Exception("invalid json parameter")
         
         return jsonVar[param]
-    def JSONStructure(self, jsonVar):
-        return 
+    
+    def JSONStructure(self, jsonVar, KEY = ''):
+    '''
+     KEY == '' returns entire structure
+     KEY == '__ROOT__' returns only root keys
+     if KEY == key, returns the sub-keys under a particular key
+    '''
+    
+        stack = list(jsonVar.keys())
+        result = list(jsonVar.keys())
+        if KEY == '__ROOT__':
+            return result
+        elif KEY != '':
+            stack = [KEY]
+            result = [KEY]
+        _json = jsonVar
+        while stack:
+            top_element = stack.pop()
+            _json = _json[top_element]
+            try:
+                list_of_keys = list(_json.keys())
+                # print(list_of_keys)
+                for key in list_of_keys:
+                    # print(top_element, end = "-->")
+                    # print(key)
+                    stack.append(key)
+                    result.append(top_element + '/' + key)
+            except:
+                return result
     # --------------------------------------------
     # Under developement
     # def JSONTraverser(indict, pre=None):
