@@ -1,6 +1,6 @@
 import unittest
 from src.exoAPI import exoREST
-
+from anytree import Node, RenderTree
 
 class TestAPI(unittest.TestCase):
     def test_addAPI_URL(self):
@@ -73,7 +73,23 @@ class TestAPI(unittest.TestCase):
             api.getDataFromAPI(url_name = 'invalid_URL')
         
     def test_JSONStructure(self):
-        pass
+        jsonVar = {"status":"success", "data":{"id":"1","employee_name":"Tiger Nixon","employee_salary":"320800",\
+        "employee_age":"61","profile_image":""}}
+        
+        api = exoREST()
+        
+        root = Node("root")
+        status = Node("status", parent = root)
+        data = Node("data", parent = root)
+        id = Node("id", parent = data)
+        employee_name = Node("employee_name", parent = data)
+        employee_salary = Node("employee_salary", parent = data)
+        employee_age = Node("employee_age", parent = data)
+        profile_image = Node("profile_image", parent = data)
+        
+        # Get entire json tree structure.
+        self.assertEqual( api.JSONStructure(jsonVar), root, "should return the JSON tree structure" )
+        
 
     def test_JSONParser(self):
         api = exoREST()
@@ -82,7 +98,7 @@ class TestAPI(unittest.TestCase):
         jsonVar = {"status":"success", "data":{"id":"1","employee_name":"Tiger Nixon","employee_salary":"320800",\
         "employee_age":"61","profile_image":""}}
         _jsonVar = {}
-        # simple test
+        # simple test with single level hierarchy
         self.assertEqual( api.JSONParser(jsonVar, "status") , "success" , "should return \'success\'" )
         
         # simple failing test: wrong hierarchy:
