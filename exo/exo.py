@@ -36,7 +36,7 @@ class exoREST:
 
     def getDataFromAPI(self, url_name):
         if url_name not in self.url_list.keys():
-            raise Exception(f'{url_name} is not a valid urlname')
+            raise Exception('{} is not a valid urlname'.format(url_name))
         url = self.url_list[url_name]
         parsed = {}
         response = requests.get(url)
