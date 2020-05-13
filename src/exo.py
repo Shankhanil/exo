@@ -1,5 +1,4 @@
 #!/usr/bin/python
-import urllib.request
 import requests
 import json
 import re
@@ -44,23 +43,29 @@ class exoREST:
         # return data
         parsed = json.loads(data)
         return parsed
-            
-    def JSONParser(self, jsonVar, param):
+class exoJSON:
+    @staticmethod
+    def JSONParser(jsonVar, param = ''):
+        _tempJson = jsonVar
+        if param == '':
+            return jsonVar
         if jsonVar == {}:
             raise Warning("Empty JSON")
         else:
-            if param not in list(jsonVar.keys() ):
-                raise Exception("invalid json parameter")
-        
-        return jsonVar[param]
+            paramList = param.split('/');
+            for p in paramList:
+                if p not in list(_tempJson.keys() ):
+                    raise Exception("invalid json parameter: {}. Available parameters: {}".format(p, _tempJson.keys()))
+                _tempJson = _tempJson[p]
+        return _tempJson
     
-    def JSONStructure(self, jsonVar, KEY = ''):
-    '''
-     KEY == '' returns entire structure
-     KEY == '__ROOT__' returns only root keys
-     if KEY == key, returns the sub-keys under a particular key
-    '''
-    
+    @staticmethod
+    def JSONStructure(jsonVar, KEY = ''):
+        '''
+         KEY == '' returns entire structure
+         KEY == '__ROOT__' returns only root keys
+         if KEY == key, returns the sub-keys under a particular key
+        '''
         stack = list(jsonVar.keys())
         result = list(jsonVar.keys())
         if KEY == '__ROOT__':
@@ -82,43 +87,4 @@ class exoREST:
                     result.append(top_element + '/' + key)
             except:
                 return result
-    # --------------------------------------------
-    # Under developement
-    # def JSONTraverser(indict, pre=None):
-        # pre = pre[:] if pre else []
-        # if isinstance(indict, dict):
-            # for key, value in indict.items():
-                # if isinstance(value, dict):
-                    # for d in dict_generator(value, pre + [key]):
-                        # yield d
-                # elif isinstance(value, list) or isinstance(value, tuple):
-                    # for v in value:
-                        # for d in dict_generator(v, pre + [key]):
-                            # yield d
-                # else:
-                    # yield pre + [key, value]
-        # else:
-            # yield pre + [indict]
-        
-    # def getDataFromJSON(self, JSONdict, parameters):
-        # '''
-            # parameters: JSON data parameters, which will be
-                        # used to access JSON data 
-                # type: LIST
-                # format:
-                    # param1/param2,
-                        # where param1 is upper hierarchy
-                              # param2 is lower hierarchy
-                              
-                # CAUTION: ONLY hierarchy upto level 2 is supported
-        # '''
-        # data = []
-        # for p in parameters:
-            # _p0 = (p.split('/'))[0]
-            # try:
-                # _p1 = (p.split('/'))[1]
-                # data.append(JSONdict[_p0][_p1])
-            # except:
-                # data.append(JSONdict[_p0])
-        # return data
-    # --------------------------------------------
+    
