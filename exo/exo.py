@@ -3,22 +3,24 @@ import requests
 import json
 import re
 '''
-An REST API interface. 
+An REST API interface.
 It supports the following functions
     1. set up a list of API urls,                       : addAPI_URL
     2. get data in JSON format from the API urls        : getDataAsJSON
 '''
+
+
 class exoREST:
 
     def __init__(self):
         self.url_list = {}
-    
+
     def addAPI_URL(self, url_name, url):
         url_format = r"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
-        
+
         if url == '':
             raise Exception('URL is null')
-        if bool(re.match(url_format, url)) == False:
+        if bool(re.match(url_format, url)) is False:
             raise Exception('URL format isn\'t matching')
         if url in self.url_list.values():
             raise Warning('URL already exists')
@@ -28,13 +30,13 @@ class exoREST:
             raise Exception('URL name already exists')
         else:
             self.url_list[url_name] = url
-            
+
     def getURL_LIST(self):
         return self.url_list
-            
+
     def getDataFromAPI(self, url_name):
         if url_name not in self.url_list.keys():
-            raise Exception(f'{url_name} is not a valid urlname')
+            raise Exception('{} is not a valid urlname'.format(url_name))
         url = self.url_list[url_name]
         parsed = {}
         response = requests.get(url)
@@ -43,24 +45,28 @@ class exoREST:
         # return data
         parsed = json.loads(data)
         return parsed
+
+
 class exoJSON:
     @staticmethod
-    def JSONParser(jsonVar, param = ''):
+    def JSONParser(jsonVar, param=''):
         _tempJson = jsonVar
         if param == '':
             return jsonVar
         if jsonVar == {}:
             raise Warning("Empty JSON")
         else:
-            paramList = param.split('/');
+            paramList = param.split('/')
             for p in paramList:
-                if p not in list(_tempJson.keys() ):
-                    raise Exception("invalid json parameter: {}. Available parameters: {}".format(p, _tempJson.keys()))
+                if p not in list(_tempJson.keys()):
+                    raise Exception(
+                        "invalid json parameter: {}. Available parameters: {}".format(
+                            p, _tempJson.keys()))
                 _tempJson = _tempJson[p]
         return _tempJson
-    
+
     @staticmethod
-    def JSONStructure(jsonVar, KEY = ''):
+    def JSONStructure(jsonVar, KEY=''):
         '''
          KEY == '' returns entire structure
          KEY == '__ROOT__' returns only root keys
@@ -85,6 +91,5 @@ class exoJSON:
                     # print(key)
                     stack.append(key)
                     result.append(top_element + '/' + key)
-            except:
+            except BaseException:
                 return result
-    
