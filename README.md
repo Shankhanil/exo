@@ -8,11 +8,11 @@ Get data from an API using our api handling tools, and then parse the api using 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install exo.
 
 ```bash
-pip install exo
+pip install exo-pyface
 ```
 
 ## Usage
-Import `exo` as `import exo` in your python file.
+Import `exo` as given in the examples in your python file.
 
 Examples of usage:
 

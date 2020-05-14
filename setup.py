@@ -4,8 +4,8 @@ except ImportError:
     from distutils.core import setup, find_packages
 
 setup(
-    name="exo",
-    version="1.0.0",
+    name="exo-pyface",
+    version="0.1.0",
     author="Shankhanil Ghosh",
     author_email="shankha.rik@gmail.com",
     packages=find_packages(),
