@@ -25,7 +25,7 @@ jobs:
     - name: Lint with Flake8
       run: |
         pip install flake8
-        flake .
+        flake8 .
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
