@@ -13,7 +13,7 @@ class TestAPI:
         assert api.addAPI_URL('validAPI_URL', 'http://dummy.restapiexample.com/api/v1/employees') is None, 'It should successfully add'
 
         # Null URL name should throw exception
-        with pytest.raises(Exception) as e_info:
+        with pytest.raises(Exception) :
             api.addAPI_URL('', 'http://dummy.restapiexample.com/api/v1/employees')
 
         # duplicate URL name should throw exception
@@ -61,13 +61,13 @@ class TestAPI:
         assert api.getDataFromAPI(url_name='validAPI_URL') == json_abc1, 'Should run properly and return json_abc1'
 
         # test with a non existing url_name
-        with pytest.raises(Exception) as e_info:
+        with pytest.raises(Exception) :
             api.getDataFromAPI(url_name='unknownAPI_URL')
 
         # test with null url
-        with pytest.raises(Exception) as e_info:
+        with pytest.raises(Exception) :
             api.getDataFromAPI(url_name='')
 
         # test will invalid api url
-        with pytest.raises(Exception) as e_info:
+        with pytest.raises(Exception) :
             api.getDataFromAPI(url_name='invalid_URL')
