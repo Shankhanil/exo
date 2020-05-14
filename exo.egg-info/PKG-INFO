@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: exo
+Version: 1.0.0
+Summary: Make your api and json handling seemless with exo. 
+Home-page: UNKNOWN
+Author: Shankhanil Ghosh
+Author-email: shankha.rik@gmail.com
+License: GPL-3.0
+Description: # exoAPI
+        A package to make your api and json handling seemless
+        
+Platform: UNKNOWN
+Description-Content-Type: text/markdown

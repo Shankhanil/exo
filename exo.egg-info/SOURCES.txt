@@ -1,0 +1,8 @@
+README.md
+setup.py
+exo/__init__.py
+exo/exo.py
+exo.egg-info/PKG-INFO
+exo.egg-info/SOURCES.txt
+exo.egg-info/dependency_links.txt
+exo.egg-info/top_level.txt
