@@ -2,7 +2,7 @@ from exo import api as exoapi
 import pytest
 
 
-class TestAPI:
+class Test_API:
     def test_addAPI_URL(self):
         api = exoapi.exoREST()
 

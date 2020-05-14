@@ -7,12 +7,15 @@ class Test_json:
         "employee_age":"61","profile_image":""}}
 
         structure_1 = ['status', 'data', 'data/id', 'data/employee_name','data/employee_salary','data/employee_age','data/profile_image']
+        structure_data = ['data','data/id', 'data/employee_name','data/employee_salary','data/employee_age','data/profile_image']
         
-        assert  _json.exoJSON().JSONStructure(jsonVar) == structure_1, "should return the JSON tree structure" 
-        
+        assert all([a == b for a, b in zip(_json.exoJSON().JSONStructure(jsonVar), structure_1)]), "should return the JSON tree structure"
+
         assert  _json.exoJSON().JSONStructure(jsonVar, 'status') == ['status'], "should return the JSON tree structure"
-        assert  _json.exoJSON().JSONStructure(jsonVar, 'data') == ['data', 'data/id', 'data/employee_name','data/employee_salary','data/employee_age','data/profile_image'], "should return the JSON tree structure" 
-        assert  _json.exoJSON().JSONStructure(jsonVar, '__ROOT__') == ['status','data'], "should return the JSON tree structure"
+        
+        assert all([a == b for a, b in zip(_json.exoJSON().JSONStructure(jsonVar, 'data'), structure_data)]), "should return the JSON/data tree structure"
+        
+        assert all([a == b for a, b in zip(_json.exoJSON().JSONStructure(jsonVar, '__ROOT__'), ['status','data'])]), "should return the JSON top keys"
         
         # if invalid keys, raise an error
         with pytest.raises(Exception) :
