@@ -13,21 +13,16 @@ class Test_json:
         actual_structure_1 = _json.exoJSON().JSONStructure(jsonVar)
         actual_structure_data = _json.exoJSON().JSONStructure(jsonVar, 'data')
         actual_structure_ROOT = _json.exoJSON().JSONStructure(jsonVar, '__ROOT__')
-        
-        # assert all([a == b for a, b in zip(_json.exoJSON().JSONStructure(jsonVar), structure_1)]), "should return the JSON tree structure"
+
         assert len(actual_structure_1) == len(structure_1)
         for element in structure_1:
             assert element in actual_structure_1
         
         assert  _json.exoJSON().JSONStructure(jsonVar, 'status') == ['status'], "should return the JSON tree structure"
         
-        # assert all([a == b for a, b in zip(_json.exoJSON().JSONStructure(jsonVar, 'data'), structure_data)]), "should return the JSON/data tree structure"
         assert len(actual_structure_data) == len(structure_data)
         for element in structure_data:
             assert element in actual_structure_data
-        
-        
-        # assert all([a == b for a, b in zip(_json.exoJSON().JSONStructure(jsonVar, '__ROOT__'), ['status','data'])]), "should return the JSON top keys"
         
         assert len(actual_structure_ROOT) == len(structure_ROOT)
         for element in structure_ROOT:
