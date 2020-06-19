@@ -31,7 +31,7 @@ from exo import json as js
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change and tasks will then be assigned accordingly.
 
 Please make sure to update tests as appropriate.
 
