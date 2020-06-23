@@ -1,10 +1,6 @@
 Exo
 =====================
 
-|Build Status|
-|License|
-|Version|
-
 ## Description
 
 The aim of this project is to make your API and JSON handling seamless.
