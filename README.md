@@ -35,5 +35,11 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
+### Current contributors
+[Shankhanil](https://github.com/Shankhanil)
+[Styrle](https://github.com/Styrle)
+
+
+
 ## License
 exo is licensed under GNU-3.0. Check the LICENSE file for more details.
